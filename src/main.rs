@@ -11,6 +11,7 @@ fn main() {
         let stream = stream.unwrap();
 
         handle_connection(stream);
+        thisisafunction(10.0);
     }
 }
 
@@ -30,5 +31,13 @@ fn handle_connection(mut stream: TcpStream) {
         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
+}
+
+// TODAY I ADDED A FILE TO THE CODEBASE TO ACTUALLY TRY TO GET A VISUAL ON THE DOCUMENT
+
+fn thisisafunction(value: f32) {
+    let taxes_cost = 0.03;
+    let result = value * taxes_cost;
+    println!("{}",result);
 }
 
