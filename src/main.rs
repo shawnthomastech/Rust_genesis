@@ -15,6 +15,7 @@ fn main() {
     //     thisisafunction(10.0);
     // }
     listfilesindir("./test");
+    test();
 }
 
 // fn handle_connection(mut stream: TcpStream) {
@@ -54,6 +55,10 @@ fn listfilesindir(path: &str) -> Result<(), std::io::Error> {
     }
 
     Ok(())
+}
+
+fn test(){
+    println!("Hey Mac has arrived")
 }
 
 //just to seal things with an update 
