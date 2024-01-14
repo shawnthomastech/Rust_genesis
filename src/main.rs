@@ -1,40 +1,40 @@
-use std::fs::{self, File, OpenOptions};
-use std::io::Write;
+use std::fs::{self, OpenOptions};
+use std::io::{self, BufRead, BufReader, Write, Read};
+use std::net::{TcpListener, TcpStream};
 use std::path::Path;
 
 fn main() {
-    // let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
-    // for stream in listener.incoming() {
-    //     let stream = stream.unwrap();
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
 
-    //     handle_connection(stream);
-    //     thisisafunction(10.0);
-    // }
+        handle_connection(stream);
+    }
     list_files_and_save("./test","./output.txt");
     if let Err(e) = insert_content_into_html("output.txt", "index.html") {
         eprintln!("Error: {}", e);
     }
 }
 
-// fn handle_connection(mut stream: TcpStream) {
-//     let buf_reader = BufReader::new(&mut stream);
-//     let request_line = buf_reader.lines().next().unwrap().unwrap();
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&mut stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-//     if request_line == "GET / HTTP/1.1" {
-//         let status_line = "HTTP/1.1 200 OK";
-//         let contents = fs::read_to_string("hello.html").unwrap();
-//         let length = contents.len();
+    if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
+        let contents = fs::read_to_string("index.html").unwrap();
+        let length = contents.len();
 
-//         let response = format!(
-//             "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
-//         );
+        let response = format!(
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+        );
 
-//         stream.write_all(response.as_bytes()).unwrap();
-//     } else {
-//         //blah
-//     }
-// }
+        stream.write_all(response.as_bytes()).unwrap();
+    } else {
+        //blah
+    }
+}
 
 // TODAY I ADDED A FILE TO THE CODEBASE TO ACTUALLY TRY TO GET A VISUAL ON THE DOCUMENT
 
