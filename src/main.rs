@@ -1,9 +1,6 @@
-use std::{
-    fs,
-    path::Path,
-    // io::{prelude::*, BufReader},
-    // net::{TcpListener, TcpStream},
-};
+use std::fs::{self, File, OpenOptions};
+use std::io::Write;
+use std::path::Path;
 
 fn main() {
     // let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -14,8 +11,7 @@ fn main() {
     //     handle_connection(stream);
     //     thisisafunction(10.0);
     // }
-    listfilesindir("./test");
-    test();
+    list_files_and_save("./test","./output.txt");
 }
 
 // fn handle_connection(mut stream: TcpStream) {
@@ -40,27 +36,26 @@ fn main() {
 // TODAY I ADDED A FILE TO THE CODEBASE TO ACTUALLY TRY TO GET A VISUAL ON THE DOCUMENT
 
 
-
-fn listfilesindir(path: &str) -> Result<(), std::io::Error> {
+fn list_files_and_save(path: &str, output_file: &str) -> Result<(), std::io::Error> {
     let paths = fs::read_dir(path)?;
+
+    let mut output = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .append(true)
+        .open(output_file)?;
 
     for path in paths {
         let path = path?.path();
 
-        // Check if the file is a .txt file
         if path.extension().and_then(std::ffi::OsStr::to_str) == Some("txt") {
             let contents = fs::read_to_string(&path)?;
-            println!("File: {} \nContents:\n{}\n", path.display(), contents);
+            writeln!(output, "File: {}\nContents:\n{}\n", path.display(), contents)?;
         }
     }
 
     Ok(())
 }
-
-fn test(){
-    println!("Hey Mac has arrived")
-}
-
 //just to seal things with an update 
 
 // Today I need to make sure that the stylesheet I am using is actually working on the front-end of the app
