@@ -56,6 +56,8 @@ fn list_files_and_save(path: &str, output_file: &str) -> Result<(), std::io::Err
 
     Ok(())
 }
+
+//once again sealing things with an update
 //just to seal things with an update 
 
 // Today I need to make sure that the stylesheet I am using is actually working on the front-end of the app
