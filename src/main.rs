@@ -12,6 +12,9 @@ fn main() {
     //     thisisafunction(10.0);
     // }
     list_files_and_save("./test","./output.txt");
+    if let Err(e) = insert_content_into_html("output.txt", "index.html") {
+        eprintln!("Error: {}", e);
+    }
 }
 
 // fn handle_connection(mut stream: TcpStream) {
@@ -50,12 +53,23 @@ fn list_files_and_save(path: &str, output_file: &str) -> Result<(), std::io::Err
 
         if path.extension().and_then(std::ffi::OsStr::to_str) == Some("txt") {
             let contents = fs::read_to_string(&path)?;
-            writeln!(output, "File: {}\nContents:\n{}\n", path.display(), contents)?;
+            writeln!(output, "File: {}\nContents:\n{}\n [PLACEHOLDER]", path.display(), contents)?;
         }
     }
 
     Ok(())
 }
+
+fn insert_content_into_html(text_file: &str, html_file: &str) -> Result<(), std::io::Error> {
+    let text_content = fs::read_to_string(text_file)?;
+
+    let mut html_content = fs::read_to_string(html_file)?;
+    html_content = html_content.replace("[PLACEHOLDER]", &text_content);
+
+    fs::write(html_file, html_content)?;
+    Ok(())
+}
+
 
 //once again sealing things with an update
 //just to seal things with an update 

@@ -6,3 +6,15 @@ File: ./test/test.txt
 Contents:
 Here is some txt
 
+File: ./test/test.txt
+Contents:
+Here is some txt
+
+File: ./test/test.txt
+Contents:
+Here is some txt
+
+File: ./test/test.txt
+Contents:
+Here is some txt
+ [PLACEHOLDER]
