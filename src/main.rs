@@ -6,15 +6,26 @@ use std::path::Path;
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
+    println!("Please enter the path of the directory:");
+    let mut path = String::new();
+    io::stdin().read_line(&mut path).expect("Failed to read line");
+
+    // Trim the newline character at the end of the input
+    let path = path.trim();
+
+    // The output file path remains constant
+    let output_file = "./output.txt";
+
+    // Call the function with the user-provided path
+    if let Err(e) = list_files_and_save(path, output_file) {
+        eprintln!("Error: {}", e);
+    }
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
         handle_connection(stream);
     }
-    list_files_and_save("./test","./output.txt");
-    if let Err(e) = insert_content_into_html("output.txt", "index.html") {
-        eprintln!("Error: {}", e);
-    }
+    println!("Please enter the path of the directory:");
 }
 
 fn handle_connection(mut stream: TcpStream) {

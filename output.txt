@@ -18,3 +18,11 @@ File: ./test/test.txt
 Contents:
 Here is some txt
  [PLACEHOLDER]
+File: ./test\test.txt
+Contents:
+Here is some txt
+ [PLACEHOLDER]
+File: ./test\test.txt
+Contents:
+OOOOOOOO
+ [PLACEHOLDER]
